@@ -1,7 +1,7 @@
 [build]
   base = "/"
   publish = "/"
-  command = "echo 'This is a static site'"
+  command = ""
 
 [[redirects]]
   from = "/*"
