@@ -3,8 +3,3 @@
   publish = "/"
   command = "echo 'Static site'"
   context = "production"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
