@@ -1,16 +1,21 @@
 [build]
   base = "/"
-  publish = "/"
-  command = ""
+  publish = "build"
+  command = "mkdir build && cp index.html about.html build/"
 
 [build.environment]
   NODE_VERSION = "16"
+
+[context.production]
+  command = "mkdir build && cp index.html about.html build/"
+  publish = "build"
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 301
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[context.production]
-  command = ""
-  publish = "/"  # This ensures we're publishing from the root
