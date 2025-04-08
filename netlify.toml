@@ -1,15 +1,9 @@
 [build]
-  publish = "build"
-  command = "python -m pip install --upgrade pip && pip install -r requirements.txt && python freeze.py"
-
-[build.environment]
-  PYTHON_VERSION = "3.9"
-  PYTHON_RUNTIME = "3.9"
+  base = "/"
+  publish = "/"
+  command = "echo 'This is a static site'"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[build.processing]
-  skip_processing = false
