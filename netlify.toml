@@ -1,19 +1,7 @@
 [build]
   base = "/"
-  publish = "build"
-  command = "mkdir build && cp index.html about.html build/"
-
-[build.environment]
-  NODE_VERSION = "16"
-
-[context.production]
-  command = "mkdir build && cp index.html about.html build/"
-  publish = "build"
-
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 301
+  publish = "/"
+  command = ""
 
 [[redirects]]
   from = "/*"
