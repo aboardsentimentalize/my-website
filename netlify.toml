@@ -3,7 +3,14 @@
   publish = "/"
   command = ""
 
+[build.environment]
+  NODE_VERSION = "16"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[context.production]
+  command = ""
+  publish = "/"  # This ensures we're publishing from the root
