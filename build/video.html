@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video - Stephanie Shum</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #222;
+            background-color: #fff;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            color: #666;
+            font-weight: 300;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 30px 20px;
+            background-color: #fafafa;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #999;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .page-title {
+            font-size: 2.5em;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .video-section {
+            margin-bottom: 60px;
+        }
+
+        .video-item {
+            margin-bottom: 50px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .video-info {
+            text-align: center;
+        }
+
+        .video-info h3 {
+            font-size: 1.4em;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .video-info p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>STEPHANIE SHUM</h1>
+        <p class="tagline">Actor</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Welcome</a>
+        <a href="headshots.html">Headshots</a>
+        <a href="resume.html">Resume</a>
+        <a href="video.html">Video</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="press.html">Press</a>
+        <a href="projects.html">Current and Upcoming Projects</a>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Video</h2>
+
+        <div class="video-section">
+            <div class="video-item">
+                <div class="video-container">
+                    <div class="video-placeholder">Demo Camp - The Forge</div>
+                </div>
+                <div class="video-info">
+                    <h3>Demo Camp - The Forge</h3>
+                    <p>Directed by Sarah Cayce</p>
+                </div>
+            </div>
+
+            <div class="video-item">
+                <div class="video-container">
+                    <div class="video-placeholder">Tire Rack - The Onion</div>
+                </div>
+                <div class="video-info">
+                    <h3>Tire Rack - The Onion</h3>
+                    <p>Directed by George Zwierzynski</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Stephanie Shum 2025</p>
+        <p>Actor | Chicago, IL</p>
+    </footer>
+</body>
+</html>

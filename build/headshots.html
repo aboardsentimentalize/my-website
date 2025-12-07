@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stephanie Shum - Actor</title>
+    <title>Headshots - Stephanie Shum</title>
     <style>
         * {
             margin: 0;
@@ -16,12 +16,6 @@
             line-height: 1.6;
             color: #222;
             background-color: #fff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
         }
 
         header {
@@ -66,23 +60,41 @@
             color: #999;
         }
 
-        .bio-section {
-            padding: 60px 20px;
-            max-width: 800px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 60px 20px;
         }
 
-        .bio-section h2 {
-            font-size: 2em;
+        .page-title {
+            font-size: 2.5em;
             font-weight: 300;
-            margin-bottom: 30px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
-        .bio-section p {
-            margin-bottom: 20px;
-            line-height: 1.8;
-            color: #444;
+        .photo-credit {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 60px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 2/3;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9em;
         }
 
         .contact-section {
@@ -101,6 +113,19 @@
             font-size: 1.8em;
             font-weight: 300;
             margin-bottom: 30px;
+        }
+
+        .booking-info {
+            margin: 40px 0;
+            padding: 30px;
+            background-color: white;
+            border: 1px solid #e5e5e5;
+        }
+
+        .booking-info h3 {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 15px;
         }
 
         .contact-form {
@@ -149,19 +174,6 @@
             background-color: #555;
         }
 
-        .booking-info {
-            margin: 40px 0;
-            padding: 30px;
-            background-color: white;
-            border: 1px solid #e5e5e5;
-        }
-
-        .booking-info h3 {
-            font-size: 1.2em;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
         footer {
             background-color: #333;
             color: #fff;
@@ -202,14 +214,16 @@
     </nav>
 
     <div class="container">
-        <section class="bio-section">
-            <h2>Welcome</h2>
-            <p>Stephanie Shum is an actor and arts administrator based in Chicago. She has performed at Steppenwolf Theatre, Goodman Theatre, and A Red Orchid Theatre, among other major Chicago venues.</p>
+        <h2 class="page-title">Headshots</h2>
+        <p class="photo-credit">Photos by Jeff Kurysz, Makeup by Crystal Drake</p>
 
-            <p>A 2023 3Arts Make a Wave grantee and School at Steppenwolf graduate, Stephanie is represented by Gray Talent Group. She currently serves as Marketing & Development Director at A Red Orchid Theatre.</p>
-
-            <p>Her extensive theater credits showcase her versatility across major Chicago venues, contributing to the vibrant theatrical landscape of the city.</p>
-        </section>
+        <div class="gallery">
+            <div class="gallery-item">Headshot 1</div>
+            <div class="gallery-item">Headshot 2</div>
+            <div class="gallery-item">Headshot 3</div>
+            <div class="gallery-item">Headshot 4</div>
+            <div class="gallery-item">Headshot 5</div>
+        </div>
     </div>
 
     <section class="contact-section">
