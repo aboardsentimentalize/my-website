@@ -90,11 +90,13 @@
         .gallery-item {
             aspect-ratio: 2/3;
             background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 0.9em;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .contact-section {
@@ -218,11 +220,11 @@
         <p class="photo-credit">Photos by Jeff Kurysz, Makeup by Crystal Drake</p>
 
         <div class="gallery">
-            <div class="gallery-item">Headshot 1</div>
-            <div class="gallery-item">Headshot 2</div>
-            <div class="gallery-item">Headshot 3</div>
-            <div class="gallery-item">Headshot 4</div>
-            <div class="gallery-item">Headshot 5</div>
+            <div class="gallery-item"><img src="images/headshots/headshot1.jpg" alt="Stephanie Shum Headshot"></div>
+            <div class="gallery-item"><img src="images/headshots/headshot2.jpg" alt="Stephanie Shum Headshot"></div>
+            <div class="gallery-item"><img src="images/headshots/headshot3.jpg" alt="Stephanie Shum Headshot"></div>
+            <div class="gallery-item"><img src="images/headshots/headshot4.jpg" alt="Stephanie Shum Headshot"></div>
+            <div class="gallery-item"><img src="images/headshots/headshot5.jpg" alt="Stephanie Shum Headshot"></div>
         </div>
     </div>
 
