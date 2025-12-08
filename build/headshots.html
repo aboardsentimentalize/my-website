@@ -29,7 +29,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 12px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -43,20 +43,35 @@
             text-transform: lowercase;
             margin: 0;
         }
+        .top-bar .brand {
+            order: 1;
+            flex: 1 1 auto;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .top-bar .menu-toggle {
+            order: 2;
+        }
+
+        .top-bar .email-toggle {
+            order: 3;
+        }
 
         .icon-button {
             background: transparent;
             border: 1px solid #fff;
             color: #fff;
-            width: 90px;
-            min-width: 90px;
-            height: 42px;
+            width: 48px;
+            min-width: 48px;
+            height: 48px;
+            padding: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 20px;
             transition: background 0.2s, color 0.2s;
         }
 
@@ -175,14 +190,14 @@
 
         .page-title-section {
             text-align: center;
-            padding: 40px 20px 20px;
+            padding: 24px 20px 12px;
         }
 
         .page-title-section h2 {
             font-size: 2em;
             font-weight: 300;
             margin-bottom: 0;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #333;
             display: inline-block;
         }
@@ -245,84 +260,7 @@
             display: block;
         }
 
-        .contact-section {
-            background-color: #f9f9f9;
-            padding: 60px 20px;
-            margin-top: 60px;
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-section h2 {
-            font-size: 1.8em;
-            font-weight: 300;
-            margin-bottom: 30px;
-        }
-
-        .booking-info {
-            margin: 40px 0;
-            padding: 30px;
-            background-color: #000;
-            border: 1px solid #e5e5e5;
-        }
-
-        .booking-info h3 {
-            font-size: 1.2em;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .contact-form {
-            margin: 30px 0;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #cccccc;
-            font-size: 0.9em;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            font-family: inherit;
-            font-size: 1em;
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        button {
-            background-color: #333;
-            color: white;
-            padding: 12px 40px;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #cccccc;
-        }
-
-                footer {
+        footer {
             background: #000;
             color: #fff;
             padding: 20px 18px;
@@ -357,11 +295,25 @@
             .brand {
                 font-size: 2.2em;
             }
+        .top-bar .brand {
+            order: 1;
+            flex: 1 1 auto;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .top-bar .menu-toggle {
+            order: 2;
+        }
+
+        .top-bar .email-toggle {
+            order: 3;
+        }
 
             .icon-button {
-                width: 90px;
-                min-width: 90px;
-                height: 44px;
+                width: 48px;
+                min-width: 48px;
+                height: 48px;
                 font-size: 18px;
             }
 
@@ -453,6 +405,20 @@
                 white-space: nowrap;
                 flex-shrink: 1;
             }
+        .top-bar .brand {
+            order: 1;
+            flex: 1 1 auto;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .top-bar .menu-toggle {
+            order: 2;
+        }
+
+        .top-bar .email-toggle {
+            order: 3;
+        }
 
             .top-bar .menu-toggle,
             .top-bar .email-toggle {
@@ -460,23 +426,61 @@
                 flex: 0 0 auto;
             }
         }
-        @media (max-width: 540px) {
-            .top-bar {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        
+        .top-bar .brand {
+            order: 1;
+            flex: 1 1 auto;
+            text-align: left;
+            white-space: nowrap;
+        }
 
-            .top-bar .brand {
-                order: 1;
-                flex: 1 1 100%;
-                text-align: center;
-                white-space: nowrap;
-            }
+        .top-bar .menu-toggle {
+            order: 2;
+        }
+
+        .top-bar .email-toggle {
+            order: 3;
+        }
 
             .top-bar .menu-toggle,
             .top-bar .email-toggle {
                 order: 2;
                 flex: 0 0 auto;
+            }
+        }                            /* header layout override */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-bar .menu-toggle {
+            order: 1;
+            flex: 0 0 auto;
+        }
+
+        .top-bar .brand {
+            order: 2;
+            flex: 1 1 auto;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .top-bar .email-toggle {
+            order: 3;
+            flex: 0 0 auto;
+        }
+
+        @media (max-width: 540px) {
+            .top-bar {
+                flex-wrap: nowrap;
+            }
+
+            .top-bar .brand {
+                flex: 1 1 auto;
             }
         }    </style>
 </head>
@@ -554,35 +558,7 @@
         setInterval(autoRotate, 4000); // Change image every 4 seconds
     </script>
 
-    <section class="contact-section">
-        <div class="contact-content">
-            <h2>Get in Touch</h2>
-
-            <div class="booking-info">
-                <h3>Bookings</h3>
-                <p><strong>Gray Talent Group</strong></p>
-                <p>For professional inquiries and bookings</p>
-            </div>
-
-            <form class="contact-form">
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message *</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-
-                <button type="submit">Send Message</button>
-            </form>
-
-            <p style="margin-top: 30px;">
-                Email: <a href="mailto:stephaniecshum@gmail.com">stephaniecshum@gmail.com</a>
-            </p>
-        </div>
-    </section>
+    
 
         <footer>
         <p>&copy; Lily Lourigan 2025</p>
@@ -620,6 +596,13 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
