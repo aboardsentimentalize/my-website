@@ -74,6 +74,8 @@
         }
 
         .press-item {
+            display: flex;
+            gap: 30px;
             margin-bottom: 50px;
             padding-bottom: 50px;
             border-bottom: 1px solid #e5e5e5;
@@ -83,34 +85,54 @@
             border-bottom: none;
         }
 
+        .press-image {
+            flex-shrink: 0;
+            width: 250px;
+        }
+
+        .press-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .press-content {
+            flex: 1;
+        }
+
         .press-item h3 {
             font-size: 1.8em;
             font-weight: 400;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .press-item .year {
             color: #999;
             font-size: 0.9em;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .press-item .quote {
             font-style: italic;
             color: #555;
-            margin: 15px 0;
-            padding-left: 20px;
-            border-left: 3px solid #e5e5e5;
+            margin: 8px 0 5px 0;
+            line-height: 1.5;
         }
 
         .press-item .source {
             color: #666;
-            font-size: 0.95em;
-            margin: 10px 0;
+            font-size: 0.9em;
+            margin-bottom: 15px;
         }
 
         .press-item .source strong {
             color: #333;
+        }
+
+        .press-item .award {
+            color: #333;
+            font-weight: 500;
+            margin: 10px 0;
         }
 
         footer {
@@ -124,6 +146,16 @@
         footer p {
             margin: 0;
             font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            .press-item {
+                flex-direction: column;
+            }
+
+            .press-image {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -206,6 +238,17 @@
 
         <div class="press-item">
             <div class="press-image">
+                <img src="images/gallery/small-world.jpg" alt="Small World production photo">
+            </div>
+            <div class="press-content">
+                <h3>Small World</h3>
+                <p class="year">2019</p>
+                <p class="quote">"intense physical work" with determined optimism</p>
+            </div>
+        </div>
+
+        <div class="press-item">
+            <div class="press-image">
                 <img src="images/gallery/second-skin.jpg" alt="Strange Heart Beating production photo">
             </div>
             <div class="press-content">
@@ -218,73 +261,127 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/gallery/small-world.jpg" alt="Small World production photo">
+                <img src="images/gallery/plainclothes.jpg" alt="Plainclothes production photo">
             </div>
             <div class="press-content">
-                <h3>Small World</h3>
-                <p class="year">2019</p>
-                <p class="quote">"intense physical work" with determined optimism</p>
+                <h3>Plainclothes</h3>
+                <p class="year">2018</p>
+                <p class="quote">Realistic monologue delivery</p>
             </div>
         </div>
 
         <div class="press-item">
-            <h3>Second Skin</h3>
-            <p class="year">2018</p>
-            <p class="source"><strong>5-star TimeOut Chicago rating</strong></p>
+            <div class="press-image">
+                <img src="images/gallery/second-skin.jpg" alt="Second Skin production photo">
+            </div>
+            <div class="press-content">
+                <h3>Second Skin</h3>
+                <p class="year">2018</p>
+                <p class="award">5-star TimeOut Chicago rating</p>
+                <p class="quote">Noted for intensity and "trademark intensity"</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>Plainclothes</h3>
-            <p class="year">2018</p>
+            <div class="press-image">
+                <img src="images/gallery/tiger-style.jpg" alt="A Story Told in Seven Fights production photo">
+            </div>
+            <div class="press-content">
+                <h3>A Story Told in Seven Fights</h3>
+                <p class="year">2018</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>A Story Told in Seven Fights</h3>
-            <p class="year">2018</p>
+            <div class="press-image">
+                <img src="images/gallery/circle-machine.jpg" alt="Harbur Gate production photo">
+            </div>
+            <div class="press-content">
+                <h3>Harbur Gate</h3>
+                <p class="year">2018</p>
+                <p class="quote">"especially strong" in complex team dynamic</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>Harbur Gate</h3>
-            <p class="year">2018</p>
-            <p class="quote">"magnificent" performances noted</p>
+            <div class="press-image">
+                <img src="images/gallery/revolution2.jpg" alt="The Crucible production photo">
+            </div>
+            <div class="press-content">
+                <h3>The Crucible</h3>
+                <p class="year">2017</p>
+                <p class="source">Feature in <strong>AScene</strong></p>
+                <p class="quote">Displayed "versatility" and "finesse" in multi-character roles</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>The Crucible</h3>
-            <p class="year">2017</p>
-            <p class="source">Feature in <strong>AScene</strong></p>
+            <div class="press-image">
+                <img src="images/gallery/small-world.jpg" alt="Mother of Smoke production photo">
+            </div>
+            <div class="press-content">
+                <h3>Mother of Smoke</h3>
+                <p class="year">2017</p>
+                <p class="quote">Praised for comedic and physical work</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>Mother of Smoke</h3>
-            <p class="year">2017</p>
+            <div class="press-image">
+                <img src="images/gallery/gorgeous.jpg" alt="Kin Folk production photo">
+            </div>
+            <div class="press-content">
+                <h3>Kin Folk</h3>
+                <p class="year">2016</p>
+                <p class="source"><strong>Daily Herald</strong> feature</p>
+                <p class="quote">Portraying "painful vulnerability"</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>Kin Folk</h3>
-            <p class="year">2016</p>
-            <p class="source"><strong>Daily Herald</strong> feature</p>
+            <div class="press-image">
+                <img src="images/gallery/circle-machine.jpg" alt="Circle-Machine production photo">
+            </div>
+            <div class="press-content">
+                <h3>Circle-Machine</h3>
+                <p class="year">2015</p>
+                <p class="quote">Called "fiery" with "intense introspection"</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>Circle-Machine</h3>
-            <p class="year">2015</p>
+            <div class="press-image">
+                <img src="images/gallery/rewilding.jpg" alt="reWILDing Genius production photo">
+            </div>
+            <div class="press-content">
+                <h3>reWILDing Genius</h3>
+                <p class="year">2014</p>
+                <p class="quote">Praised for "mysterious, reticent" portrayal</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>reWILDing Genius</h3>
-            <p class="year">2014</p>
+            <div class="press-image">
+                <img src="images/gallery/gorgeous.jpg" alt="Kate and Sam Are Not Breaking Up production photo">
+            </div>
+            <div class="press-content">
+                <h3>Kate and Sam Are Not Breaking Up</h3>
+                <p class="year">2013</p>
+                <p class="award">5-star TimeOut Chicago rating</p>
+                <p class="award">Joseph Jefferson nomination - Best New Work</p>
+                <p class="quote">Delivering thoughts "at machine-gun pace"</p>
+            </div>
         </div>
 
         <div class="press-item">
-            <h3>Kate and Sam Are Not Breaking Up</h3>
-            <p class="year">2013</p>
-            <p class="source"><strong>5-star rating; Joseph Jefferson nomination</strong></p>
-        </div>
-
-        <div class="press-item">
-            <h3>Alice</h3>
-            <p class="year">2013</p>
+            <div class="press-image">
+                <img src="images/gallery/alice.jpg" alt="Alice production photo">
+            </div>
+            <div class="press-content">
+                <h3>Alice</h3>
+                <p class="year">2013</p>
+                <p class="quote">Character described as "defiantly likable"</p>
+            </div>
         </div>
     </div>
 

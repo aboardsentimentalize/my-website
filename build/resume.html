@@ -66,16 +66,23 @@
             padding: 60px 20px;
         }
 
-        .page-title {
-            font-size: 2.5em;
-            font-weight: 300;
+        .page-title-section {
             text-align: center;
-            margin-bottom: 60px;
+            padding: 40px 20px 20px;
+        }
+
+        .page-title-section h2 {
+            font-size: 2em;
+            font-weight: 300;
+            margin-bottom: 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+            display: inline-block;
         }
 
         .resume-image {
             width: 100%;
-            max-width: 800px;
+            max-width: 1500px;
             margin: 0 auto;
             display: block;
         }
@@ -108,23 +115,22 @@
         }
 
         footer {
-            background-color: #333;
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 60px;
+            background-color: #fff;
+            color: #000;
+            padding: 20px 40px;
+            text-align: right;
+            margin-top: 40px;
         }
 
         footer p {
-            margin: 10px 0;
-            color: #bbb;
+            margin: 0;
+            font-size: 0.85em;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>STEPHANIE SHUM</h1>
-        <p class="tagline">Actor</p>
     </header>
 
     <nav>
@@ -137,9 +143,11 @@
         <a href="projects.html">Current and Upcoming Projects</a>
     </nav>
 
-    <div class="container">
-        <h2 class="page-title">Resume</h2>
+    <div class="page-title-section">
+        <h2>Resume</h2>
+    </div>
 
+    <div class="container">
         <div class="resume-image">
             <img src="images/resume/resume.jpg" alt="Stephanie Shum Resume">
         </div>
@@ -155,7 +163,6 @@
 
     <footer>
         <p>&copy; Stephanie Shum 2025</p>
-        <p>Actor | Chicago, IL</p>
     </footer>
 </body>
 </html>
