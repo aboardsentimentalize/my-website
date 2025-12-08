@@ -228,6 +228,26 @@
                 padding: 16px 12px 20px;
             }
         }
+            @media (max-width: 540px) {
+            .top-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .top-bar .brand {
+                order: 2;
+                flex: 1 1 100%;
+                text-align: center;
+            }
+
+            .top-bar .menu-toggle {
+                order: 1;
+            }
+
+            .top-bar .email-toggle {
+                order: 3;
+            }
+        }
     </style>
 </head>
 <body>
@@ -302,4 +322,5 @@
     </script>
 </body>
 </html>
+
 
