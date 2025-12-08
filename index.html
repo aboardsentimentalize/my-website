@@ -228,8 +228,23 @@
                 padding: 16px 12px 20px;
             }
         }
-    \ \ \ \ \ \ \ \ \n\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \.brand\ \{\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order:\ 1;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flex:\ 1\ 1\ 100%;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ text-align:\ center;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \.menu-toggle,\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \.email-toggle\ \{\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order:\ 2;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flex:\ 0\ 0\ auto;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }
-            @media (max-width: 540px) {
+    
+
+            .top-bar .brand {
+                order: 1;
+                flex: 1 1 100%;
+                text-align: center;
+                white-space: nowrap;
+                flex-shrink: 1;
+            }
+
+            .top-bar .menu-toggle,
+            .top-bar .email-toggle {
+                order: 2;
+                flex: 0 0 auto;
+            }
+        }
+        @media (max-width: 540px) {
             .top-bar {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -240,7 +255,6 @@
                 flex: 1 1 100%;
                 text-align: center;
                 white-space: nowrap;
-                flex-shrink: 1;
             }
 
             .top-bar .menu-toggle,
@@ -322,6 +336,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
