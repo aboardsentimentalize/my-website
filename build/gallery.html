@@ -84,6 +84,7 @@
             background-color: #f0f0f0;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
 
         .gallery-item img {
@@ -102,6 +103,39 @@
             padding: 10px;
             text-align: center;
             font-weight: 500;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .lightbox.open {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .lightbox:after {
+            content: "×";
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            color: #fff;
+            font-size: 32px;
+            font-weight: 600;
         }
 
         footer {
@@ -191,5 +225,36 @@
     <footer>
         <p>&copy; Lily Lourigan 2025</p>
     </footer>
+
+    <div class="lightbox" id="lightbox">
+        <img src="" alt="Enlarged gallery photo" id="lightbox-image">
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const thumbs = document.querySelectorAll('.gallery-item img');
+
+            thumbs.forEach(img => {
+                img.addEventListener('click', () => {
+                    lightboxImage.src = img.src;
+                    lightbox.classList.add('open');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('open');
+                lightboxImage.src = '';
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('open');
+                    lightboxImage.src = '';
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -74,6 +74,10 @@
         }
 
         .press-item {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            align-items: start;
             margin-bottom: 50px;
             padding-bottom: 50px;
             border-bottom: 1px solid #e5e5e5;
@@ -113,6 +117,68 @@
             color: #333;
         }
 
+        .press-image {
+            width: 100%;
+            max-width: 240px;
+        }
+
+        .press-image img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+        }
+
+        @media (max-width: 720px) {
+            .press-item {
+                grid-template-columns: 1fr;
+            }
+
+            .press-image {
+                max-width: 100%;
+            }
+
+            .press-image img {
+                height: auto;
+                max-height: 220px;
+            }
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .lightbox.open {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .lightbox:after {
+            content: "×";
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            color: #fff;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
         footer {
             background-color: #fff;
             color: #000;
@@ -147,7 +213,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/gorgeous.jpg" alt="Gorgeous production photo">
+                <img src="./images/gallery/gorgeous.jpg" alt="Gorgeous production photo">
             </div>
             <div class="press-content">
                 <h3>Gorgeous (2025)</h3>
@@ -159,7 +225,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/one-party-consent.jpg" alt="One Party Consent production photo">
+                <img src="./images/gallery/one-party-consent.jpg" alt="One Party Consent production photo">
             </div>
             <div class="press-content">
                 <h3>One Party Consent (2025)</h3>
@@ -170,7 +236,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/dogs.jpg" alt="Dogs production photo">
+                <img src="./images/gallery/dogs.jpg" alt="Dogs production photo">
             </div>
             <div class="press-content">
                 <h3>Dogs (2024)</h3>
@@ -180,7 +246,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/revolution.jpg" alt="Revolution production photo">
+                <img src="./images/gallery/revolution1.jpg" alt="Revolution production photo">
             </div>
             <div class="press-content">
                 <h3>Revolution (2023)</h3>
@@ -193,7 +259,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/small-world.jpg" alt="Small World production photo">
+                <img src="./images/gallery/small-world.jpg" alt="Small World production photo">
             </div>
             <div class="press-content">
                 <h3>Small World (2019)</h3>
@@ -207,7 +273,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/strange-heart-beating.jpg" alt="Strange Heart Beating production photo">
+                <img src="./images/gallery/second-skin.jpg" alt="Strange Heart Beating production photo">
             </div>
             <div class="press-content">
                 <h3>Strange Heart Beating (2019)</h3>
@@ -217,7 +283,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/plainclothes.jpg" alt="Plainclothes production photo">
+                <img src="./images/gallery/plainclothes.jpg" alt="Plainclothes production photo">
             </div>
             <div class="press-content">
                 <h3>Plainclothes (2018)</h3>
@@ -230,7 +296,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/second-skin.jpg" alt="Second Skin production photo">
+                <img src="./images/gallery/second-skin.jpg" alt="Second Skin production photo">
             </div>
             <div class="press-content">
                 <h3>Second Skin (2018)</h3>
@@ -241,7 +307,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/a-story-told-in-seven-fights.jpg" alt="A Story Told in Seven Fights production photo">
+                <img src="./images/gallery/tiger-style.jpg" alt="A Story Told in Seven Fights production photo">
             </div>
             <div class="press-content">
                 <h3>A Story Told in Seven Fights (2018)</h3>
@@ -254,7 +320,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/the-crucible.jpg" alt="The Crucible production photo">
+                <img src="./images/gallery/revolution2.jpg" alt="The Crucible production photo">
             </div>
             <div class="press-content">
                 <h3>The Crucible (2017)</h3>
@@ -266,7 +332,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/harbur-gate.jpg" alt="Harbur Gate production photo">
+                <img src="./images/gallery/circle-machine.jpg" alt="Harbur Gate production photo">
             </div>
             <div class="press-content">
                 <h3>Harbur Gate (2018)</h3>
@@ -278,7 +344,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/mother-of-smoke.jpg" alt="Mother of Smoke production photo">
+                <img src="./images/gallery/small-world.jpg" alt="Mother of Smoke production photo">
             </div>
             <div class="press-content">
                 <h3>Mother of Smoke (2017)</h3>
@@ -289,7 +355,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/kin-folk.jpg" alt="Kin Folk production photo">
+                <img src="./images/gallery/gorgeous.jpg" alt="Kin Folk production photo">
             </div>
             <div class="press-content">
                 <h3>Kin Folk (2016)</h3>
@@ -302,7 +368,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/circle-machine.jpg" alt="Circle-Machine production photo">
+                <img src="./images/gallery/circle-machine.jpg" alt="Circle-Machine production photo">
             </div>
             <div class="press-content">
                 <h3>Circle-Machine (2015)</h3>
@@ -315,7 +381,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/kate-and-sam-are-not-breaking-up.jpg" alt="Kate and Sam Are Not Breaking Up production photo">
+                <img src="./images/gallery/gorgeous.jpg" alt="Kate and Sam Are Not Breaking Up production photo">
             </div>
             <div class="press-content">
                 <h3>Kate and Sam Are Not Breaking Up (2013)</h3>
@@ -329,7 +395,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/rewilding-genius.jpg" alt="reWILDing Genius production photo">
+                <img src="./images/gallery/rewilding.jpg" alt="reWILDing Genius production photo">
             </div>
             <div class="press-content">
                 <h3>reWILDing Genius (2014)</h3>
@@ -340,7 +406,7 @@
 
         <div class="press-item">
             <div class="press-image">
-                <img src="images/alice.jpg" alt="Alice production photo">
+                <img src="./images/gallery/alice.jpg" alt="Alice production photo">
             </div>
             <div class="press-content">
                 <h3>Alice (2013)</h3>
@@ -353,5 +419,37 @@
     <footer>
         <p>&copy; Lily Lourigan 2025</p>
     </footer>
+
+    <div class="lightbox" id="lightbox">
+        <img src="" alt="Enlarged press photo" id="lightbox-image">
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const thumbnails = document.querySelectorAll('.press-image img');
+
+            thumbnails.forEach(img => {
+                img.addEventListener('click', () => {
+                    lightboxImage.src = img.src;
+                    lightbox.classList.add('open');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('open');
+                lightboxImage.src = '';
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('open');
+                    lightboxImage.src = '';
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
+
