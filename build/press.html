@@ -229,12 +229,12 @@
 
         .press-image {
             width: 100%;
-            max-width: 240px;
+            max-width: 360px;
         }
 
         .press-image img {
             width: 100%;
-            height: 170px;
+            height: 255px;
             object-fit: cover;
             border-radius: 6px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -252,7 +252,7 @@
 
             .press-image img {
                 height: auto;
-                max-height: 220px;
+                max-height: 330px;
             }
         }
 
@@ -411,26 +411,7 @@
         .email-form button:hover {
             background: #e5e5e5;
         }}
-            @media (max-width: 540px) {
-            .top-bar {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .top-bar .brand {
-                order: 2;
-                flex: 1 1 100%;
-                text-align: center;
-            }
-
-            .top-bar .menu-toggle {
-                order: 1;
-            }
-
-            .top-bar .email-toggle {
-                order: 3;
-            }
-        }
+    \ \ \ \ \ \ \ \ @media\ \(max-width:\ 540px\)\ \{\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \{\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flex-wrap:\ wrap;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ justify-content:\ center;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \.brand\ \{\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order:\ 1;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flex:\ 1\ 1\ 100%;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ text-align:\ center;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \.menu-toggle,\n\ \ \ \ \ \ \ \ \ \ \ \ \.top-bar\ \.email-toggle\ \{\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order:\ 2;\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flex:\ 0\ 0\ auto;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }
     </style>
 </head>
 <body>
@@ -738,6 +719,7 @@
     </script>
 </body>
 </html>
+
 
 
 
