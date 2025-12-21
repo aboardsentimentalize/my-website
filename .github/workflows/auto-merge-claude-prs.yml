@@ -14,13 +14,8 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Auto-approve PR
-        uses: hmarr/auto-approve-action@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Enable auto-merge
-        run: gh pr merge --auto --merge "$PR_URL"
+      - name: Merge PR
+        run: gh pr merge --merge "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
