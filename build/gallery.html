@@ -203,7 +203,7 @@
             max-height: 90vh;
             border-radius: 8px;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-            cursor: default;
+            cursor: pointer;
         }
 
         .lightbox-close {
@@ -643,6 +643,12 @@
             });
 
             lightboxNext.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('next');
+            });
+
+            // Click on image to advance to next
+            lightboxImage.addEventListener("click", (e) => {
                 e.stopPropagation();
                 navigate('next');
             });
