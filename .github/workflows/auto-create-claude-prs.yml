@@ -21,9 +21,10 @@ jobs:
       - name: Create Pull Request
         run: |
           # Check if PR already exists
-          EXISTING_PR=$(gh pr list --head "${{ github.ref_name }}" --json number --jq '.[0].number' || echo "")
+          PR_COUNT=$(gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq 'length' 2>/dev/null || echo "0")
 
-          if [ -n "$EXISTING_PR" ]; then
+          if [ "$PR_COUNT" != "0" ]; then
+            EXISTING_PR=$(gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq '.[0].number')
             echo "PR already exists: #$EXISTING_PR"
             exit 0
           fi
@@ -39,9 +40,12 @@ jobs:
 
           # Create PR
           gh pr create \
+            --repo "${{ github.repository }}" \
             --title "$TITLE" \
             --body "$BODY" \
             --base main \
-            --head "${{ github.ref_name }}"
+            --head "${{ github.ref_name }}" || \
+          # If creation fails, check if PR was created anyway
+          (PR_COUNT=$(gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq 'length' 2>/dev/null || echo "0") && [ "$PR_COUNT" != "0" ])
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
