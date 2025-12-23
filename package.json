@@ -1,0 +1,11 @@
+{
+  "name": "my-website",
+  "version": "1.0.0",
+  "description": "Lily Lourigan's portfolio website",
+  "scripts": {
+    "update-gallery": "node scripts/update-gallery.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
