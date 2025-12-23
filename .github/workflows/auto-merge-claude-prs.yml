@@ -32,14 +32,6 @@ jobs:
           git push origin ${{ github.head_ref }}
         continue-on-error: true
 
-      - name: Auto-approve PR
-        uses: hmarr/auto-approve-action@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Wait for approval to register
-        run: sleep 15
-
       - name: Merge PR
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
