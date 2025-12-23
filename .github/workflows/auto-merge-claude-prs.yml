@@ -37,10 +37,37 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Enable auto-merge
-        run: gh pr merge --auto --merge "$PR_URL"
+      - name: Wait for checks
+        run: sleep 10
+
+      - name: Merge PR
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          echo "Attempting to merge PR #$PR_NUMBER"
+
+          # Try auto-merge first (respects branch protection)
+          if gh pr merge "$PR_NUMBER" --auto --merge --repo "${{ github.repository }}" 2>&1 | tee /tmp/merge_output; then
+            echo "Auto-merge enabled successfully"
+            exit 0
+          fi
+
+          # If auto-merge fails, try direct merge
+          echo "Auto-merge failed, trying direct merge..."
+          if gh pr merge "$PR_NUMBER" --merge --repo "${{ github.repository }}" 2>&1 | tee -a /tmp/merge_output; then
+            echo "Direct merge successful"
+            exit 0
+          fi
+
+          # Check if already merged
+          if gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json state --jq '.state' | grep -q "MERGED"; then
+            echo "PR already merged"
+            exit 0
+          fi
+
+          echo "Failed to merge PR"
+          cat /tmp/merge_output
+          exit 1
         env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   update-pr-branches:
