@@ -42,3 +42,6 @@ The site is deployed on Netlify. The `build` directory contains the static files
 ## Automated Workflows
 
 This repository uses GitHub Actions to automatically create and merge pull requests for branches prefixed with `claude/`.
+
+### Requirements
+- Workflow permissions must be set to "Read and write permissions" in repository settings
