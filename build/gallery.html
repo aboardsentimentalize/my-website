@@ -507,6 +507,7 @@
 
     <script>
         (function() {
+            console.log('Lightbox script loading...');
             // Image collections for each play
             const playImages = {
                 'antigone': [
@@ -552,7 +553,12 @@
             const lightboxCounter = document.getElementById("lightbox-counter");
             const galleryItems = document.querySelectorAll(".gallery-item");
 
-            if (!lightbox || !lightboxImage || !galleryItems.length) return;
+            console.log('Elements found:', { lightbox: !!lightbox, lightboxImage: !!lightboxImage, galleryItemsCount: galleryItems.length });
+
+            if (!lightbox || !lightboxImage || !galleryItems.length) {
+                console.error('Missing required elements!', { lightbox, lightboxImage, galleryItemsCount: galleryItems.length });
+                return;
+            }
 
             let currentPlay = null;
             let currentIndex = 0;
@@ -587,12 +593,14 @@
             };
 
             const openLightbox = (play, startIndex = 0) => {
+                console.log('openLightbox called:', { play, startIndex, images: playImages[play] });
                 currentPlay = play;
                 currentImages = playImages[play] || [];
                 currentIndex = startIndex;
                 updateImage();
                 lightbox.classList.add("open");
                 document.body.style.overflow = 'hidden';
+                console.log('Lightbox opened, classList:', lightbox.classList.toString());
             };
 
             const closeLightbox = () => {
@@ -615,14 +623,18 @@
             };
 
             // Click on gallery items
-            galleryItems.forEach(item => {
+            galleryItems.forEach((item, index) => {
                 item.addEventListener("click", () => {
                     const play = item.getAttribute('data-play');
+                    console.log('Gallery item clicked:', { index, play });
                     if (play) {
                         openLightbox(play, 0);
+                    } else {
+                        console.error('No data-play attribute found on clicked item');
                     }
                 });
             });
+            console.log('Event listeners attached to', galleryItems.length, 'gallery items');
 
             // Navigation buttons
             lightboxPrev.addEventListener("click", (e) => {
