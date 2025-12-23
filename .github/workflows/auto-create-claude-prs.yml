@@ -22,10 +22,16 @@ jobs:
         run: |
           set +e  # Don't exit on error
 
-          # Check if PR already exists
-          EXISTING_PR=$(gh pr list --head "${{ github.ref_name }}" --json number --jq '.[0].number' 2>/dev/null)
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Repository: ${{ github.repository }}"
 
-          if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
+          # Check if PR already exists
+          echo "Checking for existing PR..."
+          EXISTING_PR=$(gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq '.[0].number' 2>&1)
+
+          echo "Existing PR check result: '$EXISTING_PR'"
+
+          if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ] && [ "$EXISTING_PR" != "[]" ]; then
             echo "✓ PR already exists: #$EXISTING_PR"
             exit 0
           fi
@@ -39,24 +45,40 @@ jobs:
             BODY="Automated PR for ${{ github.ref_name }}"
           fi
 
+          echo "Title: $TITLE"
+
           # Create PR
           echo "Creating PR for ${{ github.ref_name }}..."
-          if gh pr create \
+          CREATE_OUTPUT=$(gh pr create \
+            --repo "${{ github.repository }}" \
             --title "$TITLE" \
             --body "$BODY" \
             --base main \
-            --head "${{ github.ref_name }}"; then
+            --head "${{ github.ref_name }}" 2>&1)
+
+          if [ $? -eq 0 ]; then
             echo "✓ PR created successfully"
+            echo "$CREATE_OUTPUT"
+            exit 0
           else
-            # PR creation failed, check if it's because PR already exists
-            EXISTING_PR=$(gh pr list --head "${{ github.ref_name }}" --json number --jq '.[0].number' 2>/dev/null)
-            if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
-              echo "✓ PR already exists: #$EXISTING_PR"
+            echo "PR creation failed with output:"
+            echo "$CREATE_OUTPUT"
+
+            # Check if it failed because PR already exists
+            if echo "$CREATE_OUTPUT" | grep -q "already exists"; then
+              echo "✓ PR already exists"
               exit 0
-            else
-              echo "✗ Failed to create PR"
-              exit 1
             fi
+
+            # Double-check if PR exists now
+            EXISTING_PR=$(gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq '.[0].number' 2>/dev/null)
+            if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ] && [ "$EXISTING_PR" != "[]" ]; then
+              echo "✓ PR exists: #$EXISTING_PR"
+              exit 0
+            fi
+
+            echo "✗ Failed to create PR"
+            exit 1
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
