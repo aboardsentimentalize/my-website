@@ -177,17 +177,25 @@
         .lightbox {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 999;
             padding: 20px;
-            cursor: zoom-out;
         }
 
         .lightbox.open {
             display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lightbox img {
@@ -198,15 +206,24 @@
             cursor: pointer;
         }
 
-        .lightbox:after {
-            content: "�";
+        .lightbox-close {
             position: absolute;
             top: 16px;
             right: 22px;
             color: #fff;
-            font-size: 32px;
-            font-weight: 600;
-            pointer-events: none;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 10px;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+
+        .lightbox-close:hover {
+            opacity: 0.7;
         }
 
         .lightbox-nav {
@@ -218,26 +235,50 @@
             border: none;
             width: 50px;
             height: 50px;
-            font-size: 24px;
-            cursor: pointer;
             border-radius: 50%;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
             z-index: 1000;
         }
 
         .lightbox-nav:hover {
-            background: #fff;
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
         }
 
-        .lightbox-nav.prev {
+        .lightbox-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .lightbox-nav:disabled:hover {
+            transform: translateY(-50%) scale(1);
+        }
+
+        .lightbox-prev {
             left: 20px;
         }
 
-        .lightbox-nav.next {
+        .lightbox-next {
             right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 1000;
         }
 
         @media (max-width: 640px) {
@@ -247,11 +288,11 @@
                 font-size: 20px;
             }
 
-            .lightbox-nav.prev {
+            .lightbox-prev {
                 left: 10px;
             }
 
-            .lightbox-nav.next {
+            .lightbox-next {
                 right: 10px;
             }
         }
@@ -382,48 +423,48 @@
         <h2 class="page-title">Gallery</h2>
 
         <div class="gallery">
-            <div class="gallery-item">
-                <img src="images/gallery/Antigone.jpg" alt="Antigone Production Photo">
+            <div class="gallery-item" data-play="antigone">
+                <img src="images/gallery/Antigone/Antigone.jpg" alt="Antigone Production Photo">
                 <span class="production-name">Antigone</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Fml - How Carson McCullers Saved my Life.jpg" alt="Revolution Production Photo">
+            <div class="gallery-item" data-play="fml">
+                <img src="images/gallery/Fml - How Carson McCullers Saved My Life/Fml - How Carson McCullers Saved my Life.jpg" alt="Fml Production Photo">
                 <span class="production-name">Fml - How Carson McCullers Saved My Life</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/I and You.jpg" alt="I and You Production Photo">
+            <div class="gallery-item" data-play="i-and-you">
+                <img src="images/gallery/I and You/I and You.jpg" alt="I and You Production Photo">
                 <span class="production-name">I and You</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Wherever You've Been.jpg" alt="Wherever You've Been Production Photo">
+            <div class="gallery-item" data-play="wherever-youve-been">
+                <img src="images/gallery/Wherever You've Been/Wherever You've Been.jpg" alt="Wherever You've Been Production Photo">
                 <span class="production-name">Wherever You've Been</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Nine.jpg" alt="Nine Production Photo">
+            <div class="gallery-item" data-play="nine">
+                <img src="images/gallery/Nine/Nine.jpg" alt="Nine Production Photo">
                 <span class="production-name">Nine</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Life Cycle of a Star.jpg" alt="Revolution Production Photo">
+            <div class="gallery-item" data-play="life-cycle">
+                <img src="images/gallery/Life Cycle of a Star/Life Cycle of a Star.jpg" alt="Life Cycle of a Star Production Photo">
                 <span class="production-name">Life Cycle of a  Star</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Life is a Dream.jpg" alt="Life is a Dream Production Photo">
+            <div class="gallery-item" data-play="life-is-a-dream">
+                <img src="images/gallery/Life is a Dream/Life is a Dream.jpg" alt="Life is a Dream Production Photo">
                 <span class="production-name">Life is a Dream</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Georgiana and Kitt - Christmas at Pemberely.jpg" alt="Georgiana and Kitty - Christmas at Pemberley Production Photo">
+            <div class="gallery-item" data-play="georgiana-and-kitty">
+                <img src="images/gallery/Georgiana and Kitty - Christmas at Pemberley/Georgiana and Kitt - Christmas at Pemberely.jpg" alt="Georgiana and Kitty - Christmas at Pemberley Production Photo">
                 <span class="production-name">Georgiana and Kitty - Christmas at Pemberley</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Rooted.jpg" alt="Rooted Production Photo">
+            <div class="gallery-item" data-play="rooted">
+                <img src="images/gallery/Rooted/Rooted.jpg" alt="Rooted Production Photo">
                 <span class="production-name">Rooted</span>
             </div>
-            <div class="gallery-item">
-                <img src="images/gallery/Birthday Candles.JPG" alt="Birthday Candles Production Photo">
+            <div class="gallery-item" data-play="birthday-candles">
+                <img src="images/gallery/Birthday Candles/Birthday Candles.JPG" alt="Birthday Candles Production Photo">
                 <span class="production-name">Birthday Candles</span>
             </div>
-            
-            
+
+
         </div>
     </div>
 
@@ -432,9 +473,13 @@
     </footer>
 
     <div class="lightbox" id="lightbox">
-        <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous image">&#8249;</button>
-        <img src="" alt="Enlarged gallery photo" id="lightbox-image">
-        <button class="lightbox-nav next" id="lightbox-next" aria-label="Next image">&#8250;</button>
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">×</button>
+        <div class="lightbox-content">
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&lt;</button>
+            <img src="" alt="Enlarged gallery photo" id="lightbox-image">
+            <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&gt;</button>
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
     </div>
 
         <script>
@@ -459,69 +504,162 @@
         })();
     </script>
 
-        
+
     <script>
         (function() {
+            console.log('Lightbox script loading...');
+            // Image collections for each play
+            const playImages = {
+                'antigone': [
+                    'images/gallery/Antigone/Antigone.jpg'
+                ],
+                'birthday-candles': [
+                    'images/gallery/Birthday Candles/Birthday Candles 2.jpg',
+                    'images/gallery/Birthday Candles/Birthday Candles.JPG',
+                    'images/gallery/Birthday Candles/IMG_3295.jpg',
+                    'images/gallery/Birthday Candles/IMG_3301.jpg'
+                ],
+                'fml': [
+                    'images/gallery/Fml - How Carson McCullers Saved My Life/Fml - How Carson McCullers Saved my Life.jpg'
+                ],
+                'georgiana-and-kitty': [
+                    'images/gallery/Georgiana and Kitty - Christmas at Pemberley/Georgiana and Kitt - Christmas at Pemberely.jpg'
+                ],
+                'i-and-you': [
+                    'images/gallery/I and You/I and You.jpg'
+                ],
+                'life-cycle': [
+                    'images/gallery/Life Cycle of a Star/Life Cycle of a Star.jpg'
+                ],
+                'life-is-a-dream': [
+                    'images/gallery/Life is a Dream/Life is a Dream.jpg'
+                ],
+                'nine': [
+                    'images/gallery/Nine/Nine.jpg'
+                ],
+                'rooted': [
+                    'images/gallery/Rooted/Rooted.jpg'
+                ],
+                'wherever-youve-been': [
+                    "images/gallery/Wherever You've Been/Wherever You've Been.jpg"
+                ]
+            };
+
             const lightbox = document.getElementById("lightbox");
             const lightboxImage = document.getElementById("lightbox-image");
-            const prevButton = document.getElementById("lightbox-prev");
-            const nextButton = document.getElementById("lightbox-next");
-            const galleryImages = document.querySelectorAll(".gallery-item img");
-            if (!lightbox || !lightboxImage || !galleryImages.length) return;
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+            const lightboxCounter = document.getElementById("lightbox-counter");
+            const galleryItems = document.querySelectorAll(".gallery-item");
 
+            console.log('Elements found:', { lightbox: !!lightbox, lightboxImage: !!lightboxImage, galleryItemsCount: galleryItems.length });
+
+            if (!lightbox || !lightboxImage || !galleryItems.length) {
+                console.error('Missing required elements!', { lightbox, lightboxImage, galleryItemsCount: galleryItems.length });
+                return;
+            }
+
+            let currentPlay = null;
             let currentIndex = 0;
+            let currentImages = [];
 
-            const showImage = (index) => {
-                currentIndex = (index + galleryImages.length) % galleryImages.length;
-                const img = galleryImages[currentIndex];
-                lightboxImage.src = img.src;
-                lightboxImage.alt = img.alt || "Gallery photo";
+            const updateImage = () => {
+                if (currentImages.length === 0) return;
+
+                lightboxImage.src = currentImages[currentIndex];
+                lightboxImage.alt = `${currentPlay} - Image ${currentIndex + 1}`;
+
+                // Update counter
+                if (currentImages.length > 1) {
+                    lightboxCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+
+                // Update button states
+                lightboxPrev.disabled = currentIndex === 0;
+                lightboxNext.disabled = currentIndex === currentImages.length - 1;
+
+                // Hide buttons if only one image
+                if (currentImages.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'flex';
+                    lightboxNext.style.display = 'flex';
+                }
+            };
+
+            const openLightbox = (play, startIndex = 0) => {
+                console.log('openLightbox called:', { play, startIndex, images: playImages[play] });
+                currentPlay = play;
+                currentImages = playImages[play] || [];
+                currentIndex = startIndex;
+                updateImage();
+                lightbox.classList.add("open");
+                document.body.style.overflow = 'hidden';
+                console.log('Lightbox opened, classList:', lightbox.classList.toString());
             };
 
             const closeLightbox = () => {
                 lightbox.classList.remove("open");
                 lightboxImage.removeAttribute("src");
+                currentPlay = null;
+                currentImages = [];
+                currentIndex = 0;
+                document.body.style.overflow = '';
             };
 
-            const nextImage = () => {
-                showImage(currentIndex + 1);
+            const navigate = (direction) => {
+                if (direction === 'next' && currentIndex < currentImages.length - 1) {
+                    currentIndex++;
+                    updateImage();
+                } else if (direction === 'prev' && currentIndex > 0) {
+                    currentIndex--;
+                    updateImage();
+                }
             };
 
-            const prevImage = () => {
-                showImage(currentIndex - 1);
-            };
-
-            // Open lightbox when clicking gallery thumbnails
-            galleryImages.forEach((img, index) => {
-                img.addEventListener("click", () => {
-                    currentIndex = index;
-                    showImage(currentIndex);
-                    lightbox.classList.add("open");
+            // Click on gallery items
+            galleryItems.forEach((item, index) => {
+                item.addEventListener("click", () => {
+                    const play = item.getAttribute('data-play');
+                    console.log('Gallery item clicked:', { index, play });
+                    if (play) {
+                        openLightbox(play, 0);
+                    } else {
+                        console.error('No data-play attribute found on clicked item');
+                    }
                 });
+            });
+            console.log('Event listeners attached to', galleryItems.length, 'gallery items');
+
+            // Navigation buttons
+            lightboxPrev.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('prev');
+            });
+
+            lightboxNext.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('next');
             });
 
             // Click on image to advance to next
-            lightboxImage.addEventListener("click", (event) => {
-                event.stopPropagation();
-                nextImage();
+            lightboxImage.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('next');
             });
 
-            // Arrow button click handlers
-            if (prevButton) {
-                prevButton.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    prevImage();
-                });
-            }
+            // Close button
+            lightboxClose.addEventListener("click", (e) => {
+                e.stopPropagation();
+                closeLightbox();
+            });
 
-            if (nextButton) {
-                nextButton.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    nextImage();
-                });
-            }
-
-            // Close lightbox when clicking background
+            // Click on background to close
             lightbox.addEventListener("click", (event) => {
                 if (event.target === lightbox) {
                     closeLightbox();
@@ -532,12 +670,16 @@
             document.addEventListener("keydown", (event) => {
                 if (!lightbox.classList.contains("open")) return;
 
-                if (event.key === "Escape") {
-                    closeLightbox();
-                } else if (event.key === "ArrowRight") {
-                    nextImage();
-                } else if (event.key === "ArrowLeft") {
-                    prevImage();
+                switch(event.key) {
+                    case "Escape":
+                        closeLightbox();
+                        break;
+                    case "ArrowLeft":
+                        navigate('prev');
+                        break;
+                    case "ArrowRight":
+                        navigate('next');
+                        break;
                 }
             });
         })();
@@ -548,3 +690,7 @@
 </body>
 </html>
 
+<!-- deploy touch 1766509062 -->
+<!-- force deploy 1766509959 -->
+<!-- workflow test 1766511370 -->
+<!-- testing auto-create 1766511966 -->

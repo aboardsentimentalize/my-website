@@ -1,0 +1,87 @@
+name: Auto-create Claude PRs
+
+on:
+  push:
+    branches:
+      - 'claude/*'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Pull Request
+        id: create-pr
+        run: |
+          set -e
+
+          # Get commit info first
+          TITLE="$(git log -1 --pretty=%s)"
+          BODY="$(git log -1 --pretty=%b)"
+          if [ -z "$BODY" ]; then
+            BODY="Auto-generated PR from ${{ github.ref_name }}"
+          fi
+
+          # Try to create PR - if it already exists, get the PR number
+          if gh pr create \
+            --repo "${{ github.repository }}" \
+            --title "$TITLE" \
+            --body "$BODY" \
+            --base main \
+            --head "${{ github.ref_name }}" 2>&1 | tee /tmp/pr_output; then
+            echo "PR created successfully"
+          else
+            echo "PR creation command failed, checking if PR already exists..."
+          fi
+
+          # Get the PR number
+          PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq '.[0].number' 2>/dev/null || echo "")
+
+          if [ -z "$PR_NUMBER" ]; then
+            echo "Failed to get PR number"
+            cat /tmp/pr_output
+            exit 1
+          fi
+
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "Found PR #$PR_NUMBER"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge Pull Request
+        run: |
+          PR_NUMBER="${{ steps.create-pr.outputs.PR_NUMBER }}"
+          echo "Attempting to merge PR #$PR_NUMBER"
+
+          # Try direct merge
+          if gh pr merge "$PR_NUMBER" --merge --repo "${{ github.repository }}" 2>&1 | tee /tmp/merge_output; then
+            echo "PR merged successfully"
+            exit 0
+          fi
+
+          # Check if already merged
+          if gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json state --jq '.state' | grep -q "MERGED"; then
+            echo "PR already merged"
+            exit 0
+          fi
+
+          # Try with --admin flag as fallback
+          echo "Regular merge failed, trying with --admin flag..."
+          if gh pr merge "$PR_NUMBER" --merge --admin --repo "${{ github.repository }}" 2>&1 | tee -a /tmp/merge_output; then
+            echo "PR merged with admin privileges"
+            exit 0
+          fi
+
+          echo "Failed to merge PR"
+          cat /tmp/merge_output
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
