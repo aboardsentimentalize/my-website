@@ -195,17 +195,65 @@
             max-height: 90vh;
             border-radius: 8px;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-            cursor: default;
+            cursor: pointer;
         }
 
         .lightbox:after {
-            content: "×";
+            content: "ï¿½";
             position: absolute;
             top: 16px;
             right: 22px;
             color: #fff;
             font-size: 32px;
             font-weight: 600;
+            pointer-events: none;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 1000;
+        }
+
+        .lightbox-nav:hover {
+            background: #fff;
+        }
+
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+
+        .lightbox-nav.next {
+            right: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .lightbox-nav.prev {
+                left: 10px;
+            }
+
+            .lightbox-nav.next {
+                right: 10px;
+            }
         }
 
                 footer {
@@ -384,7 +432,9 @@
     </footer>
 
     <div class="lightbox" id="lightbox">
+        <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous image">&#8249;</button>
         <img src="" alt="Enlarged gallery photo" id="lightbox-image">
+        <button class="lightbox-nav next" id="lightbox-next" aria-label="Next image">&#8250;</button>
     </div>
 
         <script>
@@ -414,31 +464,80 @@
         (function() {
             const lightbox = document.getElementById("lightbox");
             const lightboxImage = document.getElementById("lightbox-image");
+            const prevButton = document.getElementById("lightbox-prev");
+            const nextButton = document.getElementById("lightbox-next");
             const galleryImages = document.querySelectorAll(".gallery-item img");
             if (!lightbox || !lightboxImage || !galleryImages.length) return;
+
+            let currentIndex = 0;
+
+            const showImage = (index) => {
+                currentIndex = (index + galleryImages.length) % galleryImages.length;
+                const img = galleryImages[currentIndex];
+                lightboxImage.src = img.src;
+                lightboxImage.alt = img.alt || "Gallery photo";
+            };
 
             const closeLightbox = () => {
                 lightbox.classList.remove("open");
                 lightboxImage.removeAttribute("src");
             };
 
-            galleryImages.forEach(img => {
+            const nextImage = () => {
+                showImage(currentIndex + 1);
+            };
+
+            const prevImage = () => {
+                showImage(currentIndex - 1);
+            };
+
+            // Open lightbox when clicking gallery thumbnails
+            galleryImages.forEach((img, index) => {
                 img.addEventListener("click", () => {
-                    lightboxImage.src = img.src;
-                    lightboxImage.alt = img.alt || "Gallery photo";
+                    currentIndex = index;
+                    showImage(currentIndex);
                     lightbox.classList.add("open");
                 });
             });
 
+            // Click on image to advance to next
+            lightboxImage.addEventListener("click", (event) => {
+                event.stopPropagation();
+                nextImage();
+            });
+
+            // Arrow button click handlers
+            if (prevButton) {
+                prevButton.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    prevImage();
+                });
+            }
+
+            if (nextButton) {
+                nextButton.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    nextImage();
+                });
+            }
+
+            // Close lightbox when clicking background
             lightbox.addEventListener("click", (event) => {
                 if (event.target === lightbox) {
                     closeLightbox();
                 }
             });
 
+            // Keyboard navigation
             document.addEventListener("keydown", (event) => {
+                if (!lightbox.classList.contains("open")) return;
+
                 if (event.key === "Escape") {
                     closeLightbox();
+                } else if (event.key === "ArrowRight") {
+                    nextImage();
+                } else if (event.key === "ArrowLeft") {
+                    prevImage();
                 }
             });
         })();
