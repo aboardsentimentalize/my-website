@@ -20,28 +20,39 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          # Check if PR already exists
-          EXISTING_PR=$(gh pr list --head "${{ github.ref_name }}" --json number --jq '.[0].number' || echo "")
+          set -e
 
-          if [ -n "$EXISTING_PR" ]; then
-            echo "PR already exists: #$EXISTING_PR"
-            exit 0
-          fi
-
-          # Get commit info
+          # Get commit info first
           TITLE="$(git log -1 --pretty=%s)"
           BODY="$(git log -1 --pretty=%b)"
-
-          # Use title as body if body is empty
           if [ -z "$BODY" ]; then
-            BODY="$TITLE"
+            BODY="Auto-generated PR from ${{ github.ref_name }}"
           fi
 
-          # Create PR
+          # Try to create PR - if it already exists, gh will tell us
           gh pr create \
+            --repo "${{ github.repository }}" \
             --title "$TITLE" \
             --body "$BODY" \
             --base main \
-            --head "${{ github.ref_name }}"
+            --head "${{ github.ref_name }}" 2>&1 | tee /tmp/pr_output || true
+
+          # Check output
+          if grep -qi "already exists\|duplicate" /tmp/pr_output; then
+            echo "PR already exists - this is fine"
+            exit 0
+          elif grep -qi "https://github.com" /tmp/pr_output; then
+            echo "PR created successfully"
+            exit 0
+          else
+            echo "Checking if PR exists..."
+            if gh pr list --repo "${{ github.repository }}" --head "${{ github.ref_name }}" --json number --jq 'length' 2>/dev/null | grep -q "^[1-9]"; then
+              echo "PR exists - success"
+              exit 0
+            fi
+            echo "Failed to create PR and no existing PR found"
+            cat /tmp/pr_output
+            exit 1
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
