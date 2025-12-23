@@ -38,3 +38,7 @@ my-website/
 ## Deployment
 
 The site is deployed on Netlify. The `build` directory contains the static files that should be deployed.
+
+## Automated Workflows
+
+This repository uses GitHub Actions to automatically create and merge pull requests for branches prefixed with `claude/`.
