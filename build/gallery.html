@@ -421,6 +421,7 @@
 
     <div class="container">
         <h2 class="page-title">Gallery</h2>
+        <!-- Deployment verification: 1735019400 -->
 
         <div class="gallery">
             <div class="gallery-item" data-play="antigone">
@@ -507,9 +508,9 @@
 
     <script>
         (function() {
-            console.log('Lightbox script loading...');
+            console.log('Lightbox script loading... [v20241224-FIXED-1735019000]');
             // Image collections for each play
-            const playImages = {
+            const fallbackPlayImages = {
                 'antigone': [
                     'images/gallery/Antigone/Antigone.jpg'
                 ],
@@ -517,6 +518,7 @@
                     'images/gallery/Birthday Candles/Birthday Candles 2.jpg',
                     'images/gallery/Birthday Candles/Birthday Candles.JPG',
                     'images/gallery/Birthday Candles/IMG_3295.jpg',
+                    'images/gallery/Birthday Candles/IMG_3297.JPG',
                     'images/gallery/Birthday Candles/IMG_3301.jpg'
                 ],
                 'fml': [
@@ -541,7 +543,7 @@
                     'images/gallery/Rooted/Rooted.jpg'
                 ],
                 'wherever-youve-been': [
-                    'images/gallery/Wherever You've Been/Wherever You've Been.jpg'
+                    'images/gallery/Wherever You\'ve Been/Wherever You\'ve Been.jpg'
                 ]
             };
 
@@ -552,6 +554,30 @@
             const lightboxNext = document.getElementById("lightbox-next");
             const lightboxCounter = document.getElementById("lightbox-counter");
             const galleryItems = document.querySelectorAll(".gallery-item");
+            let playImages = fallbackPlayImages;
+
+            const loadManifest = async () => {
+                try {
+                    const response = await fetch('gallery-images.json', { cache: 'no-cache' });
+                    if (!response.ok) {
+                        throw new Error(`Request failed with status ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data && typeof data === 'object') {
+                        playImages = data;
+                        console.log('Loaded gallery manifest:', playImages);
+                    } else {
+                        throw new Error('Manifest did not contain an object');
+                    }
+                } catch (error) {
+                    console.warn('Falling back to inline gallery manifest.', error);
+                    playImages = fallbackPlayImages;
+                }
+            };
+
+            loadManifest();
 
             console.log('Elements found:', { lightbox: !!lightbox, lightboxImage: !!lightboxImage, galleryItemsCount: galleryItems.length });
 
@@ -596,6 +622,12 @@
                 console.log('openLightbox called:', { play, startIndex, images: playImages[play] });
                 currentPlay = play;
                 currentImages = playImages[play] || [];
+
+                if (!currentImages.length) {
+                    console.warn(`No images found for play id "${play}".`);
+                    return;
+                }
+
                 currentIndex = startIndex;
                 updateImage();
                 lightbox.classList.add("open");
@@ -694,3 +726,4 @@
 <!-- force deploy 1766509959 -->
 <!-- workflow test 1766511370 -->
 <!-- testing auto-create 1766511966 -->
+<!-- apostrophe fix deployed 1735018800 -->

@@ -5,6 +5,7 @@ const path = require('path');
 
 const GALLERY_DIR = path.join(__dirname, '../build/images/gallery');
 const GALLERY_HTML = path.join(__dirname, '../build/gallery.html');
+const MANIFEST_PATH = path.join(__dirname, '../build/gallery-images.json');
 
 // Function to get all image files in a directory
 function getImageFiles(dir) {
@@ -66,16 +67,16 @@ function updateGalleryHtml(playImages) {
 
   // Generate the playImages JavaScript object
   const playImagesLines = Object.entries(playImages).map(([key, images]) => {
-    const imagesList = images.map(img => `'${img}'`).join(',\n                    ');
+    const imagesList = images.map(img => `'${img.replace(/'/g, "\\'")}'`).join(',\n                    ');
     return `                '${key}': [\n                    ${imagesList}\n                ]`;
   });
 
-  const playImagesCode = `const playImages = {
+  const playImagesCode = `const fallbackPlayImages = {
 ${playImagesLines.join(',\n')}
             };`;
 
   // Replace the existing playImages object
-  const regex = /const playImages = \{[\s\S]*?\};/;
+  const regex = /const fallbackPlayImages = \{[\s\S]*?\};/;
 
   if (!regex.test(html)) {
     console.error('Could not find playImages object in gallery.html');
@@ -94,6 +95,11 @@ ${playImagesLines.join(',\n')}
   });
 }
 
+function writeManifest(playImages) {
+  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(playImages, null, 2));
+  console.log(`✓ Wrote manifest to ${path.relative(path.join(__dirname, '..'), MANIFEST_PATH)}`);
+}
+
 // Main execution
 try {
   console.log('Scanning gallery folders...');
@@ -104,6 +110,7 @@ try {
     process.exit(0);
   }
 
+  writeManifest(playImages);
   updateGalleryHtml(playImages);
   console.log('\n✓ Gallery update complete!');
 } catch (error) {
