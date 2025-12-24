@@ -67,7 +67,7 @@ function updateGalleryHtml(playImages) {
 
   // Generate the playImages JavaScript object
   const playImagesLines = Object.entries(playImages).map(([key, images]) => {
-    const imagesList = images.map(img => `'${img}'`).join(',\n                    ');
+    const imagesList = images.map(img => `'${img.replace(/'/g, "\\'")}'`).join(',\n                    ');
     return `                '${key}': [\n                    ${imagesList}\n                ]`;
   });
 
