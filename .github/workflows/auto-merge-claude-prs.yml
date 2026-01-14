@@ -40,8 +40,6 @@ jobs:
           # Try direct merge (no branch protection rules configured)
           if gh pr merge "$PR_NUMBER" --merge --repo "${{ github.repository }}" 2>&1 | tee /tmp/merge_output; then
             echo "PR merged successfully"
-            echo "Triggering Deploy Pages workflow..."
-            gh workflow run "Deploy Pages" --repo "${{ github.repository }}" || echo "Failed to trigger Deploy Pages"
             exit 0
           fi
 
@@ -55,8 +53,6 @@ jobs:
           echo "Regular merge failed, trying with --admin flag..."
           if gh pr merge "$PR_NUMBER" --merge --admin --repo "${{ github.repository }}" 2>&1 | tee -a /tmp/merge_output; then
             echo "PR merged with admin privileges"
-            echo "Triggering Deploy Pages workflow..."
-            gh workflow run "Deploy Pages" --repo "${{ github.repository }}" || echo "Failed to trigger Deploy Pages"
             exit 0
           fi
 
