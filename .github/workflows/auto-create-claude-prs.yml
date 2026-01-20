@@ -85,3 +85,10 @@ jobs:
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Pages Deployment
+        run: |
+          echo "Triggering Pages deployment workflow..."
+          gh workflow run pages.yml --repo "${{ github.repository }}" --ref main || echo "Failed to trigger deployment, but continuing..."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
