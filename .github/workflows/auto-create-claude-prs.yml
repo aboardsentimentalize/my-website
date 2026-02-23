@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'claude/*'
+      - '!claude/direct-*'
 
 permissions:
   contents: write

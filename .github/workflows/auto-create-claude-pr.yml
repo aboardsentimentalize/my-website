@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'claude/**'
+      - '!claude/direct-**'
 
 jobs:
   create-pr:
