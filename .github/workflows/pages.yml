@@ -19,6 +19,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: lilylourigan
+          projectName: lily-lourigan-portfolio
           directory: build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
