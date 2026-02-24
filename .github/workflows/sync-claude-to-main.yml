@@ -36,5 +36,8 @@ jobs:
           fi
 
           git push origin main
+
+      - name: Delete Claude branch
+        run: git push origin --delete ${{ github.ref_name }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
