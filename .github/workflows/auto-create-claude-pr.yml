@@ -1,0 +1,41 @@
+name: Auto-create Claude PR
+
+on:
+  push:
+    branches:
+      - 'claude/**'
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if PR already exists
+          existing_pr=$(gh pr list --head "${{ github.ref_name }}" --json number --jq '.[0].number')
+
+          if [ -z "$existing_pr" ]; then
+            # Extract session ID from branch name (last part after last -)
+            session_id="${{ github.ref_name }}"
+            session_id="${session_id##*-}"
+
+            # Create PR
+            gh pr create \
+              --title "$(echo '${{ github.ref_name }}' | sed 's/claude\///' | sed 's/-/ /g' | sed 's/ [A-Za-z0-9]*$//')" \
+              --body "Automated PR from Claude Code session ${session_id}" \
+              --base main \
+              --head "${{ github.ref_name }}"
+
+            echo "PR created successfully"
+          else
+            echo "PR #${existing_pr} already exists"
+          fi
