@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- deploy sync touch -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Lily Lourigan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #f5f5f5;
+            background-color: #000;
+        }
+
+        header {
+            background: #000;
+            color: #fff;
+            padding: 28px 18px;
+            border-bottom: 1px solid #111;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            flex: 1;
+            text-align: center;
+            font-size: 2.8em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+            margin: 0;
+        }        .top-bar .brand {            order: 1;            flex: 1 1 auto;            text-align: left;            white-space: nowrap;        }        .top-bar .menu-toggle {            order: 2;        }        .top-bar .email-link {            order: 3;        }
+
+        .icon-button {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            width: 48px;            min-width: 48px;            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+                
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 0 14px;
+            background-color: #000;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.2s ease;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            padding: 10px 12px;
+            border-radius: 4px;
+            transition: color 0.3s, background 0.3s;
+        }
+
+                nav.open {            max-height: 600px;            opacity: 1;            padding: 18px 14px 24px;        }
+
+        .email-dropdown h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .email-dropdown p {
+            margin: 0 0 10px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .email-form label {
+            display: block;
+            margin-bottom: 6px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .email-form input,
+        .email-form textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #444;
+            background: #000;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .email-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .email-form button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .email-form button:hover {            background: #e5e5e5;        }        .container {            max-width: 1400px;            margin: 0 auto;            padding: 60px 20px;        }        .page-title {            font-size: 2em;            font-weight: 300;            text-align: center;            margin: 24px auto 12px;            padding-bottom: 10px;            display: block;        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 3/2;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item .production-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .lightbox.open {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            cursor: pointer;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 10px;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+
+        .lightbox-close:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 1000;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .lightbox-nav:disabled:hover {
+            transform: translateY(-50%) scale(1);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+        }
+
+                footer {
+            background: #000;
+            color: #fff;
+            padding: 20px 18px;
+            text-align: right;
+
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.85em;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 640px) {
+            header {
+                padding: 40px 16px 24px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                letter-spacing: 1px;
+            }
+
+            .top-bar {
+                gap: 12px;
+            }
+
+            .brand {
+                font-size: 2.2em;
+            }        .top-bar .brand {            order: 1;            flex: 1 1 auto;            text-align: left;            white-space: nowrap;        }        .top-bar .menu-toggle {            order: 2;        }        .top-bar .email-link {            order: 3;        }
+
+            .icon-button {
+                width: 48px;                min-width: 48px;                height: 48px;
+                font-size: 18px;
+            }
+
+            nav {
+                padding: 0 12px;
+            }
+
+                            
+
+        .email-dropdown h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .email-dropdown p {
+            margin: 0 0 10px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .email-form label {
+            display: block;
+            margin-bottom: 6px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .email-form input,
+        .email-form textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #444;
+            background: #000;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .email-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .email-form button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .email-form button:hover {
+            background: #e5e5e5;
+        }}
+                .top-bar .brand {                order: 1;                flex: 1 1 100%;                text-align: center;                white-space: nowrap;                flex-shrink: 1;            }        .top-bar .brand {            order: 1;            flex: 1 1 auto;            text-align: left;            white-space: nowrap;        }        .top-bar .menu-toggle {            order: 2;        }        .top-bar .email-link {            order: 3;        }            .top-bar .menu-toggle,            .top-bar .email-link {                order: 2;                flex: 0 0 auto;            }        }                .top-bar .brand {            order: 1;            flex: 1 1 auto;            text-align: left;            white-space: nowrap;        }        .top-bar .menu-toggle {            order: 2;        }        .top-bar .email-link {            order: 3;        }            .top-bar .menu-toggle,            .top-bar .email-link {                order: 2;                flex: 0 0 auto;            }        }                            /* header layout override */        .top-bar {            display: flex;            align-items: center;            justify-content: space-between;            gap: 12px;            max-width: 1200px;            margin: 0 auto;        }        .top-bar .menu-toggle {            order: 1;            flex: 0 0 auto;        }        .top-bar .brand {            order: 2;            flex: 1 1 auto;            text-align: center;            white-space: nowrap;        }        .top-bar .email-link {            order: 3;            flex: 0 0 auto;        }        @media (max-width: 540px) {            .top-bar {                flex-wrap: nowrap;            }            .top-bar .brand {                flex: 1 1 auto;            }        }    </style>
+</head>
+<body>
+        <header>
+                        <div class="top-bar">
+            <button class="icon-button menu-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+            <h1 class="brand">lily lourigan</h1>
+            <a class="icon-button email-link" href="mailto:ililoag@gmail.com" aria-label="Email">&#9993;</a>
+        </div>
+    </header>
+
+    <nav id="site-nav">
+        <a href="index.html">Welcome</a>
+        <a href="headshots.html">Headshots</a>
+        <a href="resume.html">Resume</a>
+        <a href="video.html">Video</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="press.html">Press</a>
+        <a href="projects.html">Current and Upcoming Projects</a>
+    </nav>
+        
+
+    <div class="container">
+        <h2 class="page-title">Gallery</h2>
+        <!-- Deployment verification: 1735019400 -->
+
+        <div class="gallery">
+            <div class="gallery-item" data-play="antigone">
+                <img src="images/gallery/Antigone/Antigone.jpg" alt="Antigone Production Photo">
+                <span class="production-name">Antigone</span>
+            </div>
+            <div class="gallery-item" data-play="fml">
+                <img src="images/gallery/Fml - How Carson McCullers Saved My Life/Fml - How Carson McCullers Saved my Life.jpg" alt="Fml Production Photo">
+                <span class="production-name">Fml - How Carson McCullers Saved My Life</span>
+            </div>
+            <div class="gallery-item" data-play="i-and-you">
+                <img src="images/gallery/I and You/I and You.jpg" alt="I and You Production Photo">
+                <span class="production-name">I and You</span>
+            </div>
+            <div class="gallery-item" data-play="wherever-youve-been">
+                <img src="images/gallery/Wherever You've Been/Wherever You've Been.jpg" alt="Wherever You've Been Production Photo">
+                <span class="production-name">Wherever You've Been</span>
+            </div>
+            <div class="gallery-item" data-play="nine">
+                <img src="images/gallery/Nine/Nine.jpg" alt="Nine Production Photo">
+                <span class="production-name">Nine</span>
+            </div>
+            <div class="gallery-item" data-play="life-cycle">
+                <img src="images/gallery/Life Cycle of a Star/Life Cycle of a Star.jpg" alt="Life Cycle of a Star Production Photo">
+                <span class="production-name">Life Cycle of a  Star</span>
+            </div>
+            <div class="gallery-item" data-play="life-is-a-dream">
+                <img src="images/gallery/Life is a Dream/Life is a Dream.jpg" alt="Life is a Dream Production Photo">
+                <span class="production-name">Life is a Dream</span>
+            </div>
+            <div class="gallery-item" data-play="georgiana-and-kitty">
+                <img src="images/gallery/Georgiana and Kitty - Christmas at Pemberley/Georgiana and Kitt - Christmas at Pemberely.jpg" alt="Georgiana and Kitty - Christmas at Pemberley Production Photo">
+                <span class="production-name">Georgiana and Kitty - Christmas at Pemberley</span>
+            </div>
+            <div class="gallery-item" data-play="rooted">
+                <img src="images/gallery/Rooted/Rooted.jpg" alt="Rooted Production Photo">
+                <span class="production-name">Rooted</span>
+            </div>
+            <div class="gallery-item" data-play="birthday-candles">
+                <img src="images/gallery/Birthday Candles/Birthday Candles.JPG" alt="Birthday Candles Production Photo">
+                <span class="production-name">Birthday Candles</span>
+            </div>
+
+
+        </div>
+    </div>
+
+        <footer>
+        <p>&copy; Lily Lourigan <script>document.write(new Date().getFullYear())</script></p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">×</button>
+        <div class="lightbox-content">
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&lt;</button>
+            <img src="" alt="Enlarged gallery photo" id="lightbox-image">
+            <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&gt;</button>
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+        <script>
+        (function() {
+            const toggle = document.getElementById("menu-toggle");
+            const nav = document.getElementById("site-nav");
+            if (!toggle || !nav) return;
+
+            const setExpanded = (isExpanded) => {
+                nav.classList.toggle("open", isExpanded);
+                toggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+            };
+
+            toggle.addEventListener("click", () => {
+                const isOpen = nav.classList.toggle("open");
+                toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+
+            nav.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", () => setExpanded(false));
+            });
+        })();
+    </script>
+
+
+    <script>
+        (function() {
+            console.log('Lightbox script loading... [v20241224-FIXED-1735019000]');
+            // Image collections for each play
+            const fallbackPlayImages = {
+                'antigone': [
+                    'images/gallery/Antigone/Antigone.jpg'
+                ],
+                'birthday-candles': [
+                    'images/gallery/Birthday Candles/Birthday Candles 2.jpg',
+                    'images/gallery/Birthday Candles/Birthday Candles.JPG',
+                    'images/gallery/Birthday Candles/IMG_3295.jpg',
+                    'images/gallery/Birthday Candles/IMG_3297.JPG',
+                    'images/gallery/Birthday Candles/IMG_3301.jpg'
+                ],
+                'fml': [
+                    'images/gallery/Fml - How Carson McCullers Saved My Life/Fml - How Carson McCullers Saved my Life.jpg'
+                ],
+                'georgiana-and-kitty': [
+                    'images/gallery/Georgiana and Kitty - Christmas at Pemberley/Georgiana and Kitt - Christmas at Pemberely.jpg'
+                ],
+                'i-and-you': [
+                    'images/gallery/I and You/I and You.jpg'
+                ],
+                'life-cycle': [
+                    'images/gallery/Life Cycle of a Star/Life Cycle of a Star.jpg'
+                ],
+                'life-is-a-dream': [
+                    'images/gallery/Life is a Dream/Life is a Dream.jpg'
+                ],
+                'nine': [
+                    'images/gallery/Nine/Nine.jpg'
+                ],
+                'rooted': [
+                    'images/gallery/Rooted/Rooted.jpg'
+                ],
+                'wherever-youve-been': [
+                    'images/gallery/Wherever You\'ve Been/Wherever You\'ve Been.jpg'
+                ]
+            };
+
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImage = document.getElementById("lightbox-image");
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+            const lightboxCounter = document.getElementById("lightbox-counter");
+            const galleryItems = document.querySelectorAll(".gallery-item");
+            let playImages = fallbackPlayImages;
+
+            const loadManifest = async () => {
+                try {
+                    const response = await fetch('gallery-images.json', { cache: 'no-cache' });
+                    if (!response.ok) {
+                        throw new Error(`Request failed with status ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data && typeof data === 'object') {
+                        playImages = data;
+                        console.log('Loaded gallery manifest:', playImages);
+                    } else {
+                        throw new Error('Manifest did not contain an object');
+                    }
+                } catch (error) {
+                    console.warn('Falling back to inline gallery manifest.', error);
+                    playImages = fallbackPlayImages;
+                }
+            };
+
+            loadManifest();
+
+            console.log('Elements found:', { lightbox: !!lightbox, lightboxImage: !!lightboxImage, galleryItemsCount: galleryItems.length });
+
+            if (!lightbox || !lightboxImage || !galleryItems.length) {
+                console.error('Missing required elements!', { lightbox, lightboxImage, galleryItemsCount: galleryItems.length });
+                return;
+            }
+
+            let currentPlay = null;
+            let currentIndex = 0;
+            let currentImages = [];
+
+            const updateImage = () => {
+                if (currentImages.length === 0) return;
+
+                lightboxImage.src = currentImages[currentIndex];
+                lightboxImage.alt = `${currentPlay} - Image ${currentIndex + 1}`;
+
+                // Update counter
+                if (currentImages.length > 1) {
+                    lightboxCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+
+                // Update button states
+                lightboxPrev.disabled = currentIndex === 0;
+                lightboxNext.disabled = currentIndex === currentImages.length - 1;
+
+                // Hide buttons if only one image
+                if (currentImages.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'flex';
+                    lightboxNext.style.display = 'flex';
+                }
+            };
+
+            const openLightbox = (play, startIndex = 0) => {
+                console.log('openLightbox called:', { play, startIndex, images: playImages[play] });
+                currentPlay = play;
+                currentImages = playImages[play] || [];
+
+                if (!currentImages.length) {
+                    console.warn(`No images found for play id "${play}".`);
+                    return;
+                }
+
+                currentIndex = startIndex;
+                updateImage();
+                lightbox.classList.add("open");
+                document.body.style.overflow = 'hidden';
+                console.log('Lightbox opened, classList:', lightbox.classList.toString());
+            };
+
+            const closeLightbox = () => {
+                lightbox.classList.remove("open");
+                lightboxImage.removeAttribute("src");
+                currentPlay = null;
+                currentImages = [];
+                currentIndex = 0;
+                document.body.style.overflow = '';
+            };
+
+            const navigate = (direction) => {
+                if (direction === 'next' && currentIndex < currentImages.length - 1) {
+                    currentIndex++;
+                    updateImage();
+                } else if (direction === 'prev' && currentIndex > 0) {
+                    currentIndex--;
+                    updateImage();
+                }
+            };
+
+            // Click on gallery items
+            galleryItems.forEach((item, index) => {
+                item.addEventListener("click", () => {
+                    const play = item.getAttribute('data-play');
+                    console.log('Gallery item clicked:', { index, play });
+                    if (play) {
+                        openLightbox(play, 0);
+                    } else {
+                        console.error('No data-play attribute found on clicked item');
+                    }
+                });
+            });
+            console.log('Event listeners attached to', galleryItems.length, 'gallery items');
+
+            // Navigation buttons
+            lightboxPrev.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('prev');
+            });
+
+            lightboxNext.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('next');
+            });
+
+            // Click on image to advance to next
+            lightboxImage.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigate('next');
+            });
+
+            // Close button
+            lightboxClose.addEventListener("click", (e) => {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            // Click on background to close
+            lightbox.addEventListener("click", (event) => {
+                if (event.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener("keydown", (event) => {
+                if (!lightbox.classList.contains("open")) return;
+
+                switch(event.key) {
+                    case "Escape":
+                        closeLightbox();
+                        break;
+                    case "ArrowLeft":
+                        navigate('prev');
+                        break;
+                    case "ArrowRight":
+                        navigate('next');
+                        break;
+                }
+            });
+        })();
+    </script>
+    <!-- nav-toggle version 4: add aria-expanded default -->
+    <!-- deploy touch 1 -->
+    <script src="email-popup.js"></script>
+</body>
+</html>
+
+<!-- deploy touch 1766509062 -->
+<!-- force deploy 1766509959 -->
+<!-- workflow test 1766511370 -->
+<!-- testing auto-create 1766511966 -->
+<!-- apostrophe fix deployed 1735018800 -->
+<!-- force pages deploy 1735021400 -->
