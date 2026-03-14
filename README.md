@@ -1,6 +1,6 @@
 # My Website
 
-A static website deployed via GitHub Pages.
+A static website deployed via GitHub Pages...
 
 ## Project Structure
 
