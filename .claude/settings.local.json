@@ -3,7 +3,9 @@
     "allow": [
       "Bash(dir:*)",
       "Bash(cmd /c \"cd /d p:\\\\ && dir /b\")",
-      "Bash(cmd /c \"dir p:\\\\ /b /ad\")"
+      "Bash(cmd /c \"dir p:\\\\ /b /ad\")",
+      "Bash(cp \"/root/.claude/uploads/e5947158-7a6b-5429-b81a-55050d6c88a6/668a1720-acting_resume_6.17.26.pdf\" \"/home/user/my-website/images/resume/Lourigan acting resume 6.17.26.pdf\")",
+      "Bash(cp \"/root/.claude/uploads/e5947158-7a6b-5429-b81a-55050d6c88a6/668a1720-acting_resume_6.17.26.pdf\" \"/home/user/my-website/build/images/resume/Lourigan acting resume 6.17.26.pdf\")"
     ]
   }
 }
