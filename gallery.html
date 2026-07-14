@@ -161,6 +161,22 @@
             object-fit: cover;
         }
 
+        /* These production photos are tall portrait shots; the default
+           center crop into a 3:2 box cuts off the actor's head, so bias
+           the crop toward the top of the frame. */
+        .gallery-item[data-play="fml"] img {
+            object-position: 50% 20%;
+        }
+
+        .gallery-item[data-play="life-is-a-dream"] img {
+            object-position: 50% 10%;
+        }
+
+        .gallery-item[data-play="georgiana-and-kitty"] img,
+        .gallery-item[data-play="angel-street"] img {
+            object-position: 50% 0%;
+        }
+
         .gallery-item .production-name {
             position: absolute;
             bottom: 0;
