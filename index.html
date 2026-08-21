@@ -414,11 +414,8 @@
 
                 function showSlides() {
                     slides.forEach(slide => slide.classList.remove('active'));
-                    slideIndex++;
-                    if (slideIndex >= slides.length) {
-                        slideIndex = 0;
-                    }
                     slides[slideIndex].classList.add('active');
+                    slideIndex = (slideIndex + 1) % slides.length;
                     setTimeout(showSlides, 4000); // Change image every 4 seconds
                 }
 
