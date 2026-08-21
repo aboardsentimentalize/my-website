@@ -382,33 +382,60 @@
 
     <div class="slideshow-container">
         <img src="images/welcome/photo1.jpg" alt="Production Photo" class="active slide-fade">
-        <img src="images/welcome/photo2.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo3.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo4.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo5.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo6.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo7.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo8.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo9.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo10.jpg" alt="Production Photo" class="slide-fade">
-        <img src="images/welcome/photo11.jpg" alt="Production Photo" class="slide-fade">
     </div>
 
     <script>
-        let slideIndex = 0;
-        const slides = document.querySelectorAll('.slideshow-container img');
+        (function() {
+            const container = document.querySelector('.slideshow-container');
+            const RANDOM_SLIDE_COUNT = 10;
 
-        function showSlides() {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slideIndex++;
-            if (slideIndex >= slides.length) {
-                slideIndex = 0;
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
             }
-            slides[slideIndex].classList.add('active');
-            setTimeout(showSlides, 4000); // Change image every 4 seconds
-        }
 
-        showSlides();
+            function addRandomSlides(imagePaths) {
+                shuffle(imagePaths).slice(0, RANDOM_SLIDE_COUNT).forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = 'Production Photo';
+                    img.className = 'slide-fade';
+                    container.appendChild(img);
+                });
+            }
+
+            function startSlideshow() {
+                let slideIndex = 0;
+                const slides = document.querySelectorAll('.slideshow-container img');
+                if (!slides.length) return;
+
+                function showSlides() {
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    slideIndex++;
+                    if (slideIndex >= slides.length) {
+                        slideIndex = 0;
+                    }
+                    slides[slideIndex].classList.add('active');
+                    setTimeout(showSlides, 4000); // Change image every 4 seconds
+                }
+
+                showSlides();
+            }
+
+            fetch('gallery-images.json', { cache: 'no-cache' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Request failed with status ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => addRandomSlides(Object.values(data).flat()))
+                .catch(error => console.warn('Could not load gallery images for welcome slideshow.', error))
+                .finally(startSlideshow);
+        })();
     </script>
 
         <script>
