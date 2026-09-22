@@ -152,11 +152,14 @@
             position: relative;
             margin: 40px auto;
             background-color: #000;
+            aspect-ratio: 3 / 2;
+            overflow: hidden;
         }
 
         .slideshow-container img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: none;
         }
 
@@ -397,25 +400,41 @@
                 return array;
             }
 
+            // Only landscape photos go in the slideshow, so the frame never changes shape.
             function addRandomSlides(imagePaths) {
-                shuffle(imagePaths).slice(0, RANDOM_SLIDE_COUNT).forEach(src => {
+                const candidates = shuffle(imagePaths);
+                let added = 0;
+
+                function tryNext() {
+                    if (added >= RANDOM_SLIDE_COUNT || !candidates.length) return;
                     const img = document.createElement('img');
-                    img.src = src;
                     img.alt = 'Production Photo';
                     img.className = 'slide-fade';
-                    container.appendChild(img);
-                });
+                    img.onload = () => {
+                        if (img.naturalWidth > img.naturalHeight) {
+                            container.appendChild(img);
+                            added++;
+                        }
+                        tryNext();
+                    };
+                    img.onerror = tryNext;
+                    img.src = candidates.pop();
+                }
+
+                tryNext();
             }
 
             function startSlideshow() {
                 let slideIndex = 0;
-                const slides = document.querySelectorAll('.slideshow-container img');
-                if (!slides.length) return;
 
                 function showSlides() {
+                    // Re-query each time, as landscape slides are appended once they load.
+                    const slides = document.querySelectorAll('.slideshow-container img');
+                    if (!slides.length) return;
+                    slideIndex %= slides.length;
                     slides.forEach(slide => slide.classList.remove('active'));
                     slides[slideIndex].classList.add('active');
-                    slideIndex = (slideIndex + 1) % slides.length;
+                    slideIndex++;
                     setTimeout(showSlides, 4000); // Change image every 4 seconds
                 }
 
