@@ -1,5 +1,5 @@
 (function() {
-    const EMAIL_ADDRESS = "ililoag@gmail.com";
+    const EMAIL_ADDRESS = "ililoag15@gmail.com";
     const emailButton = document.querySelector(".email-link");
     if (!emailButton) return;
 
