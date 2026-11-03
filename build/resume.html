@@ -134,12 +134,19 @@
             text-align: center;
         }
 
-        .resume-container embed {
+        .resume-container img {
             width: 100%;
             max-width: 850px;
-            height: 1100px;
+            height: auto;
             display: block;
             margin: 0 auto;
+            background: #fff;
+        }
+
+        .resume-download {
+            display: inline-block;
+            margin-top: 16px;
+            color: #f5f5f5;
         }
 
         @media (max-width: 640px) {
@@ -257,7 +264,8 @@
     </div>
 
     <div class="resume-container">
-        <embed src="/images/resume/Lourigan%20acting%20resume.pdf#navpanes=0" type="application/pdf" alt="Resume">
+        <img src="/images/resume/Lourigan%20acting%20resume.jpg" alt="Lily Lourigan acting resume">
+        <a class="resume-download" href="/images/resume/Lourigan%20acting%20resume.pdf" download>Download PDF</a>
     </div>
 
     <footer>
